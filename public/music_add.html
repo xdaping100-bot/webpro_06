@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>新規登録</title>
+</head>
+<body>
+    <h1>アルバム新規登録</h1>
+    <form action="/music" method="POST">
+        <label for="title">アルバム名:</label><br>
+        <input type="text" id="title" name="title" required><br>
+
+        <label for="artist">アーティスト:</label><br>
+        <input type="text" id="artist" name="artist" required><br>
+
+        <label for="year">発売年:</label><br>
+        <input type="number" id="year" name="year"><br>
+
+        <label for="time">総再生時間:</label><br>
+        <input type="text" id="time" name="time" required><br>
+
+        <label for="price">価格:</label><br>
+        <input type="number" id="price" name="price" required><br>
+        <br>
+        <input type="submit" value="登録">
+    </form>
+</body>
+</html>

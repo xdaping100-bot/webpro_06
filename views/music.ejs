@@ -1,0 +1,22 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>お気に入りのアルバム</title>
+</head>
+<body>
+  <h2>アルバムの詳細</h2>
+  <table border="1">
+    <tr><th>ID</th><th>アルバム名</th><th>アーティスト名</th><th>操作</th></tr>
+      <% let number = 0 %>
+      <% for( let row of data ) { %>
+        <tr><td><%= row.id %></td>
+        <td><%= row.title %></td>
+        <td><a href="/music/<%= number %>"><%= row.artist %></a></td></tr>
+        <td><a href="/music/delete/<%= number %>">削除</a></td></tr>
+        <% number += 1 %>
+      <% } %>
+  </table>
+  <a href="/music/create">追加</a>
+</body>
+</html>

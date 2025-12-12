@@ -37,7 +37,7 @@ app.get("/omikuji2", (req, res) => {
   res.render( 'omikuji2', {result:luck} );
 });
 
-app.get("/janken", (req, res) => {
+app.get("/janken2", (req, res) => {
   let hand = req.query.hand;
   let win = Number( req.query.win );
   let total = Number( req.query.total );
@@ -51,9 +51,21 @@ app.get("/janken", (req, res) => {
   // ここに勝敗の判定を入れる
   // 以下の数行は人間の勝ちの場合の処理なので，
   // 判定に沿ってあいこと負けの処理を追加する
-  judgement = '勝ち';
-  win += 1;
+  if ( hand == cpu ){
+    judgement = "あいこ";
+  } else if (
+    ( hand == 'グー' && cpu == 'チョキ') ||
+    (hand == 'チョキ' && cpu == 'パー' ) ||
+    ( hand == 'パー' && cpu == 'グー' )
+  ) {
+    judgement = "勝ち"
+    win += 1;
+  } else {
+    judgement = "負け";
+  }
+
   total += 1;
+
   const display = {
     your: hand,
     cpu: cpu,
