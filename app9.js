@@ -78,4 +78,75 @@ app.get("/music/delete/:number", (req, res) => {
   res.redirect('/music' );
 });
 
+
+let class = [
+  { id:1, title:"論理回路", teacher:"鎌倉 浩嗣", room_number:7103, days:"水曜日" },
+  { id:2, title:"技術文書作成", teacher:"信川 創", room_number:3212, days:"木曜日" },
+  { id:3, title:"プログラミング言語", teacher:"須田 宇宙", room_number:3212, days:"火曜日" },
+  { id:4, title:"言語と文化１ 中国語", teacher:"近衛 飛鳥", room_number:5305, days:"月曜日" },
+  { id:5, title:"電気回路", teacher:"東山 幸司，安武 伸俊，丸山 敏毅，鎌田 智之", room_number:8109, days:"金曜日" },
+  { id:6, title:"英語表現", teacher:"布川 由美子", room_number:5205, days:"水曜日" },
+  { id:7, title:"環境科学概論", teacher:"笠嶋 義夫", room_number:7201, days:"火曜日" },
+];
+
+// 一覧
+app.get("/subject", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  res.render('subject', {data: class} );
+});
+
+// Create
+app.get("/subject/create", (req, res) => {
+  res.redirect('/public/subject_add.html');
+});
+
+// Create
+app.post("/subject", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const id = class.length + 1;
+  const title= req.body.title;
+  const teacher = req.body.teacher;
+  const room_number = req.body.room_number;
+  const days = req.body.days;
+  album.push( { id: id, title: title, teacher: teacher, room_number: room_number, days: days } );
+  res.redirect('/subject');
+});
+
+// Read
+app.get("/subject/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = req.params.number;
+  const detail = class[ number ];
+  res.render('subject_detail', {id: number, data: detail} );
+});
+
+// Edit
+app.get("/subject/edit/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = req.params.number;
+  const detail = class[ number ];
+  res.render('subject_edit', {id: number, data: detail} );
+});
+
+// Update
+app.post("/subject/update/:number", (req, res) => {
+    const number = req.params.number;
+  // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  class[req.params.number].code = req.body.code;
+  class[req.params.number].teacher = req.body.teacher;
+  class[req.params.number].room_number = req.body.room_number;
+  class[req.params.number].days = req.body.days;
+  res.redirect('/subject' );
+});
+
+// Delete
+app.get("/subject/delete/:number", (req, res) => {
+  // 本来は削除の確認ページを表示する
+  // 本来は削除する番号が存在するか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  album.splice( req.params.number, 1 );
+  res.redirect('/subject' );
+});
+
 app.listen(8080, () => console.log("Example app listening on port 8080!"));

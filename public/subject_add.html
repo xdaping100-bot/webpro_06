@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>新規登録</title>
+</head>
+<body>
+    <h1>授業の新規登録</h1>
+    <form action="/subject" method="POST">
+        <label for="title">教科名:</label><br>
+        <input type="text" id="title" name="title" required><br>
+
+        <label for="teacher">教員指名:</label><br>
+        <input type="text" id="teacher" name="teacher" required><br>
+
+        <label for="room_number">教室番号:</label><br>
+        <input type="number" id="room_number" name="room_number"><br>
+
+        <label for="days">開講曜日:</label><br>
+        <input type="text" id="days" name="days" required><br>
+
+        <br>
+        <input type="submit" value="登録">
+    </form>
+</body>
+</html>

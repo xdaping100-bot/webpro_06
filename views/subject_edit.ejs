@@ -1,0 +1,22 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= data.name %></title>
+</head>
+<body>
+  <h2><%= data.name %>の編集</h2>
+  <form action="/subject/update/<%= id %>" method="POST">
+    <table>
+      <tr><td>ID</td><td><%= data.id %></td></tr> 
+      <tr><th>項目</th><th>データ</th></tr>
+      <tr><td>教科名</td><td><input type="text" name="title" value="<%= data.title %>"></td></tr>
+      <tr><td>教員指名</td><td><input type="text" name="teacher" value="<%= data.teacher %>"></td></tr>
+      <tr><td>教室番号</td><td><input type="number" name="room_number" value="<%= data.room_number %>"></td></tr>
+      <tr><td>開講曜日</td><td><input type="text" name="days" value="<%= data.days %>"></td></tr>
+    </table>
+    <input type="submit" values="更新">
+  </form>
+  <br>
+  <a href="/subject/">授業一覧に戻る</a>
+</body>
+</html>
