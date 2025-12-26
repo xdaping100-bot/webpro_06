@@ -2,27 +2,26 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>アルバム一覧</title>
+  <title>アニメ一覧</title>
 </head>
 <body>
-  <h2>お気に入りのアルバム</h2>
+  <h2>アニメ一覧</h2>
   <table border="1">
     <tr>
         <th>ID</th>
         <th>タイトル</th>
-        <th>アーティスト</th>
-        </tr>
+    </tr>
       <% let number = 0 %>
       <% for( let row of data ) { %>
         <tr>
             <td><%= row.id %></td>
-            <td><a href="/music/<%= number %>"><%= row.title %></a></td>
-            <td><%= row.artist %></td>
-            </tr>
+            <td><a href="/anime/<%= number %>"><%= row.title %></a></td>
+            <td><a href="/anime/delete/<%= number %>">削除</a></td>
+        </tr>
         <% number += 1 %>
       <% } %>
   </table>
   <br>
-  <a href="/music/create">新規追加</a>
+  <a href="/anime/create">新規追加</a>
 </body>
 </html>

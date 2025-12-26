@@ -1,0 +1,19 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= data.title %></title>
+</head>
+<body>
+  <h2><%= data.title %>の詳細</h2>
+  <table border="1">
+    <tr><th>項目</th><th>データ</th></tr>
+    <tr><td>ID</td><td><%= data.id %></td></tr>
+    <tr><td>話数</td><td><%= data.ep_number %></td></tr>
+    <tr><td>タイトル</td><td><%= data.title %></td></tr>
+    <tr><td>あらすじ</td><td><%= data.summary %></td></tr>
+  </table>
+  <a href="/anime/edit/<%= id %>">編集</a>
+  <a href="/anime">話一覧に戻る</a>
+</body>
+</html>

@@ -1,20 +1,23 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><%= data.name %></title>
+  <title><%= data.title %></title>
 </head>
 <body>
   <h2><%= data.title %>の詳細</h2>
   <table border="1">
     <tr><th>項目</th><th>データ</th></tr>
     <tr><td>ID</td><td><%= data.id %></td></tr>
-    <tr><td>教科名</td><td><%= data.title %></td></tr>
-    <tr><td>教員指名</td><td><%= data.teacher %></td></tr>
+    <tr><td>科目名</td><td><%= data.title %></td></tr>
+    <tr><td>教員名</td><td><%= data.teacher %></td></tr>
     <tr><td>教室番号</td><td><%= data.room_number %></td></tr>
-    <tr><td>開講曜日</td><td><%= data.days %></td></tr>
+    <tr><td>曜日</td><td><%= data.days %></td></tr>
   </table>
+  <br>
   <a href="/subject/edit/<%= id %>">編集</a>
+  <a href="/subject/delete/<%= id %>">この授業を削除</a>
+  <br><br>
   <a href="/subject">授業一覧に戻る</a>
 </body>
 </html>

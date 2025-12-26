@@ -1,21 +1,24 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><%= data.name %></title>
+  <title><%= data.title %></title>
 </head>
 <body>
   <h2><%= data.title %>の詳細</h2>
   <table border="1">
     <tr><th>項目</th><th>データ</th></tr>
     <tr><td>ID</td><td><%= data.id %></td></tr>
-    <tr><td>アルバム名</td><td><%= data.title %></td></tr>
+    <tr><td>タイトル</td><td><%= data.title %></td></tr>
     <tr><td>アーティスト</td><td><%= data.artist %></td></tr>
     <tr><td>発売年</td><td><%= data.year %></td></tr>
-    <tr><td>総再生時間</td><td><%= data.time %></td></tr>
-    <tr><td>値段</td><td><%= data.price %>円</td></tr>
+    <tr><td>時間</td><td><%= data.time %></td></tr>
+    <tr><td>価格</td><td><%= data.price %></td></tr>
   </table>
+  <br>
   <a href="/music/edit/<%= id %>">編集</a>
+  <a href="/music/delete/<%= id %>">このアルバムを削除</a>
+  <br><br>
   <a href="/music">アルバム一覧に戻る</a>
 </body>
 </html>

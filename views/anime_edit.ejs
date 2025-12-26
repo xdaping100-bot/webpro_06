@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= data.title %></title>
+</head>
+<body>
+  <h2><%= data.title %>の編集</h2>
+  <form action="/anime/update/<%= id %>" method="POST">
+    <table>
+      <tr><td>ID</td><td><%= data.id %></td></tr> 
+      <tr><th>項目</th><th>データ</th></tr>
+      <tr><td>話数</td><td><input type="text" name="ep_number" value="<%= data.ep_number %>"></td></tr>
+      <tr><td>タイトル</td><td><input type="text" name="title" value="<%= data.title %>"></td></tr>
+      <tr><td>あらすじ</td><td><input type="text" name="summary" value="<%= data.summary %>"></td></tr>
+    </table>
+    <input type="submit" values="更新">
+  </form>
+  <br>
+  <a href="/anime/">話一覧に戻る</a>
+</body>
+</html>

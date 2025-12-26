@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>新規登録</title>
+</head>
+<body>
+<h1>アニメエピソードの新規登録</h1>
+    <form action="/anime" method="POST">
+        <label for="ep_number">話数:</label><br>
+        <input type="text" id="ep_number" name="ep_number" required><br>
+
+        <label for="title">タイトル:</label><br>
+        <input type="text" id="title" name="title" required><br>
+
+        <label for="summary">あらすじ:</label><br>
+        <input type="text" id="summary" name="summary"><br>
+        <br>
+        <input type="submit" value="登録">
+    </form>
+</body>
+</html>

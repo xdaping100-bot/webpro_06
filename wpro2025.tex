@@ -1,0 +1,162 @@
+\documentclass[uplatex,dvipdfmx]{jlreq}
+\usepackage[fleqn,tbtags]{mathtools}
+\usepackage{jlreq-deluxe}
+\usepackage[noalphabet]{pxchfon} % must be after otf package
+\usepackage{stix2} %欧文＆数式フォント
+\usepackage[fleqn,tbtags]{mathtools} % 数式関連 (w/ amsmath)
+\usepackage{hira-stix} % ヒラギノフォント＆STIX2 フォント代替定義（Warning回避）
+\usepackage{amsmath} % 数式環境を使うため
+\usepackage{graphicx} % \resizebox のために必要
+\usepackage{tabularx} % 今回は使わないが、もし必要なら
+
+
+\begin{document}
+\renewcommand{\arraystretch}{1.2} % 行の高さを1.2倍にする
+
+\title{Webアプリケーション仕様書}
+\author{25G1028 大坪咲}
+\date{2025年12月26日}
+\maketitle
+
+\section{利用者向け仕様書}
+\subsection{概要}
+本システムは，ユーザーがお気に入りのアルバムの情報を管理するためのアプリケーションである．アルバム情報の閲覧，新規登録，詳細情報の確認，情報の編集，削除を行うことが可能である．
+
+\subsection{一覧表示と詳細表示}
+システムにアクセスすると，まず登録されているアルバムの一覧画面が表示される．一覧画面には各アルバムのID，タイトル，アーティスト名が表示されている．特定のアルバムについて詳しい情報を確認したい場合は，一覧表の「タイトル」のリンクをクリックする．詳細表示画面へ遷移し，価格などの情報を閲覧することができる．
+
+\subsection{新規登録}
+新しいアルバムをリストに追加したい場合は，一覧画面の「新規追加」のリンクをクリックする．登録フォームが表示され，タイトル，アーティスト名，発売年，再生時間，価格を入力し「登録」ボタンをクリックすることで保存できる．保存が完了すると，自動的に一覧画面に戻り，新しいアルバムが追加されたことを確認できる．
+
+\subsection{編集と削除}
+登録済みの情報を編集したい場合は，詳細表示画面にある「編集」をクリックする．編集フォームには現在の情報が入力された状態で表示されるため，修正して「更新」をクリックする．また，アルバムをリストから削除したい場合は，詳細表示画面にある「削除」をクリックすることで，そのデータを削除し，一覧画面へ戻ることができる．
+
+\section{管理者向け仕様書}
+\subsection{概要}
+本システムはNode.jsとExpressフレームワークを用いて構成されたWebアプリケーションである．動作にはNode.jsがインストールされたサーバー環境が必要となる．アプリケーションは単一のプロセスとして動作し，ポート番号8080番を使用してHTTPリクエストを受け付ける．
+
+\subsection{起動と停止}
+アプリケーションを起動するには，ターミナルにてコマンドを実行する．正常に起動すると”Example app listening on port 8080!”と表示される．停止する場合は，実行中のターミナルで Ctrl + C を入力する．
+
+\section{開発者向け仕様書}
+\subsection{お気に入りのアルバムリスト}
+\subsubsection{データ構造}
+アルバム情報は配列変数album内にオブジェクトとして格納している．各オブジェクトは表\ref{tb:music}のプロパティを持つ．
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{l|l|l|l}
+    プロパティ名 & 型 & 説明 & 備考 \\ \hline\hline
+    id & Number & アルバムのID & 1から始まる連番，自動採番される \\ \hline
+    title & String & アルバムのタイトル & 詳細画面へのリンク \\ \hline
+    artist & String & アーティスト名 & ー \\ \hline
+    year & Number & 発売年 & ー \\ \hline
+    time & String & 総再生時間 & 文字列として扱う \\ \hline
+    price & Number & 価格 & ー \\ \hline
+  \end{tabular}
+  \caption{プロパティについての説明}
+  \label{tb:music}
+\end{table}
+
+\subsubsection{ページ遷移と画面構成}
+まず一覧表示画面にアクセスする．ここから「新規追加」リンクで新規登録フォームへ，「タイトル」リンクで詳細表示画面に遷移する．詳細画面表示からは，編集フォームへの遷移と削除処理の実行が可能である．新規登録，更新，削除の処理後は一覧表示画面に戻る．
+
+\subsubsection{HTTPメソッドとリソース名}
+表\ref{tb:music2}に機能，HTTPメソッド及びリソース名を示す．
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabularx}{\textwidth}{|l|l|l|X|} \hline
+    機能 & HTTPメソッド & リソース名 & 処理内容 \\ \hline\hline
+    一覧表示 & GET & /music & アルバム一覧を表示する \\ \hline
+    新規登録フォーム & GET & /music/create & データ入力フォームへリダイレクトする \\ \hline
+    新規登録 & POST & /music & フォームから送信されたデータにIDを与えて配列に追加する \\ \hline
+    詳細表示 & GET & /music/:number & 配列のインデックスに対応する詳細を表示する \\ \hline
+    編集フォーム & GET & /music/edit/:number & 指定されたデータの編集画面を表示する \\ \hline
+    更新 & POST & /music/update/:number & 既存データを上書きする \\ \hline
+    削除 & GET & /music/delete/:number & 指定されたデータを配列から削除する \\ \hline
+  \end{tabularx}
+  \caption{機能，HTTPメソッド及びリソース名についての説明}
+  \label{tb:music2}
+\end{table}
+
+\subsection{授業リスト}
+\subsubsection{データ構造}
+授業情報は配列変数subjects内にオブジェクトとして格納している．各オブジェクトは表\ref{tb:subject}のプロパティを持つ．
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{l|l|l|l}
+    プロパティ名 & 型 & 説明 & 備考 \\ \hline\hline
+    id & Number & 授業のID & 1から始まる連番，自動採番される \\ \hline
+    title & String & 授業名 & 詳細画面へのリンク \\ \hline
+    teacher & String & 担当教員名 & ー \\ \hline
+    room\_number & Number & 教室番号 & ー \\ \hline
+    days & String & 開講曜日 & ー \\ \hline
+  \end{tabular}
+  \caption{プロパティについての説明}
+  \label{tb:subject}
+\end{table}
+
+\subsubsection{ページ遷移と画面構成}
+まず一覧表示画面ではID，科目名，教員名を表示している．詳細表示画面において教室番号や曜日を含むすべての情報を確認できる．
+
+\subsubsection{HTTPメソッドとリソース名}
+表\ref{tb:subject2}に機能，HTTPメソッド及びリソース名を示す．
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabularx}{\textwidth}{|l|l|l|X|} \hline
+    機能 & HTTPメソッド & リソース名 & 処理内容 \\ \hline\hline
+    一覧表示 & GET & /subject & 科目一覧を表示する \\ \hline
+    新規登録フォーム & GET & /subject/create & データ入力フォームへリダイレクトする \\ \hline
+    新規登録 & POST & /subject & 新規データを配列に追加する \\ \hline
+    詳細表示 & GET & /subject/:number & 指定された授業の詳細を表示する \\ \hline
+    編集フォーム & GET & /subject/edit/:number & 指定された授業の編集画面を表示する \\ \hline
+    更新 & POST & /subject/update/:number & 既存データを更新する \\ \hline
+    削除 & GET & /subject/delete/:number & 指定されたデータを削除する \\ \hline
+  \end{tabularx}
+  \caption{機能，HTTPメソッド及びリソース名についての説明}
+  \label{tb:subject2}
+\end{table}
+
+\subsection{アニメ「ドロヘドロ」エピソードリスト}
+\subsubsection{データ構造}
+エピソード情報は配列変数story内にオブジェクトとして格納している．各オブジェクトは表\ref{tb:story}のプロパティを持つ．
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{l|l|l|l}
+    プロパティ名 & 型 & 説明 & 備考 \\ \hline\hline
+    id & Number & エピソードのID & 1から始まる連番 \\ \hline
+    ep\_number & Number & エピソード番号 & ー \\ \hline
+    title & String & エピソード名 & 詳細画面へのリンク \\ \hline
+    summary & String & あらすじ & 長文テキスト \\ \hline
+  \end{tabular}
+  \caption{プロパティについての説明}
+  \label{tb:story}
+\end{table}
+
+\subsubsection{ページ遷移と画面構成}
+まず一覧表示画面ではIDとタイトルを表示する．あらすじなどの詳細情報はタイトルをクリックした先の詳細画面のみで表示される．
+
+\subsubsection{HTTPメソッドとリソース名}
+表\ref{tb:story2}に機能，HTTPメソッド及びリソース名を示す．
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabularx}{\textwidth}{|l|l|l|X|} \hline
+    機能 & HTTPメソッド & リソース名 & 処理内容 \\ \hline\hline
+    一覧表示 & GET & /anime & エピソード一覧を表示する \\ \hline
+    新規登録フォーム & GET & /anime/create & データ入力フォームへリダイレクトする \\ \hline
+    新規登録 & POST & /anime & 新規データを配列に追加する \\ \hline
+    詳細表示 & GET & /anime/:number & 指定されたエピソードの詳細を表示する \\ \hline
+    編集フォーム & GET & /anime/edit/:number & 指定されたエピソードの編集画面を表示する \\ \hline
+    更新 & POST & /anime/update/:number & 既存データを更新する \\ \hline
+    削除 & GET & /anime/delete/:number & 指定されたデータを削除する \\ \hline
+  \end{tabularx}
+  \caption{機能，HTTPメソッド及びリソース名についての説明}
+  \label{tb:story2}
+\end{table}
+
+\end{document}
