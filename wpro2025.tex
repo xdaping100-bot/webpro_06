@@ -18,19 +18,39 @@
 \date{2025年12月26日}
 \maketitle
 
-\begin{thebibliography}
-\url{https://github.com/xdaping100-bot/webpro_06}
-\end{thebibliography}
+\url{https://github.com/xdaping100-bot/webpro\_06}
 
 \section{利用者向け仕様書}
 \subsection{概要}
 本システムは，ユーザーがお気に入りのアルバムの情報を管理するためのアプリケーションである．アルバム情報の閲覧，新規登録，詳細情報の確認，情報の編集，削除を行うことが可能である．
 
 \subsection{一覧表示と詳細表示}
-システムにアクセスすると，まず登録されているアルバムの一覧画面が表示される．一覧画面には各アルバムのID，タイトル，アーティスト名が表示されている．特定のアルバムについて詳しい情報を確認したい場合は，一覧表の「タイトル」のリンクをクリックする．詳細表示画面へ遷移し，価格などの情報を閲覧することができる．
+システムにアクセスすると，まず図\ref{fig:list}に示す通り，登録されているアルバムの一覧画面が表示される．一覧画面には各アルバムのID，タイトル，アーティスト名が表示されている．特定のアルバムについて詳しい情報を確認したい場合は，一覧表の「タイトル」のリンクをクリックする．図\ref{fig:detail}に示すように，詳細表示画面へ遷移し，価格などの情報を閲覧することができる．
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=13cm]{music_list.png}
+  \caption{アルバム一覧画面}
+  \label{fig:list}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=10cm]{music_detail.png}
+  \caption{アルバム詳細画面}
+  \label{fig:detail}
+\end{figure}
 
 \subsection{新規登録}
-新しいアルバムをリストに追加したい場合は，一覧画面の「新規追加」のリンクをクリックする．登録フォームが表示され，タイトル，アーティスト名，発売年，再生時間，価格を入力し「登録」ボタンをクリックすることで保存できる．保存が完了すると，自動的に一覧画面に戻り，新しいアルバムが追加されたことを確認できる．
+新しいアルバムをリストに追加したい場合は，一覧画面の「新規追加」のリンクをクリックする．図\ref{fig:form}に示すように登録フォームが表示され，タイトル，アーティスト名，発売年，再生時間，価格を入力し「登録」ボタンをクリックすることで保存できる．保存が完了すると，自動的に一覧画面に戻り，新しいアルバムが追加されたことを確認できる．
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=10cm]{music_form.png}
+  \caption{新規登録フォーム}
+  \label{fig:form}
+\end{figure}
+
 
 \subsection{編集と削除}
 登録済みの情報を編集したい場合は，詳細表示画面にある「編集」をクリックする．編集フォームには現在の情報が入力された状態で表示されるため，修正して「更新」をクリックする．また，アルバムをリストから削除したい場合は，詳細表示画面にある「削除」をクリックすることで，そのデータを削除し，一覧画面へ戻ることができる．
@@ -40,7 +60,14 @@
 本システムはNode.jsとExpressフレームワークを用いて構成されたWebアプリケーションである．動作にはNode.jsがインストールされたサーバー環境が必要となる．アプリケーションは単一のプロセスとして動作し，ポート番号8080番を使用してHTTPリクエストを受け付ける．
 
 \subsection{起動と停止}
-アプリケーションを起動するには，ターミナルにてコマンドを実行する．正常に起動すると”Example app listening on port 8080!”と表示される．停止する場合は，実行中のターミナルで Ctrl + C を入力する．
+アプリケーションを起動するには，ターミナルにて以下のコマンドを実行する．
+
+\begin{verbatim}
+$ node app9.js
+\end{verbatim}
+
+
+正常に起動すると”Example app listening on port 8080!”と表示される．停止する場合は，実行中のターミナルで Ctrl + C を入力する．
 
 \section{開発者向け仕様書}
 \subsection{お気に入りのアルバムリスト}
@@ -64,6 +91,14 @@
 
 \subsubsection{ページ遷移と画面構成}
 まず一覧表示画面にアクセスする．ここから「新規追加」リンクで新規登録フォームへ，「タイトル」リンクで詳細表示画面に遷移する．詳細画面表示からは，編集フォームへの遷移と削除処理の実行が可能である．新規登録，更新，削除の処理後は一覧表示画面に戻る．
+図\ref{fig:transration}にページ遷移の概要を示す．
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=13cm]{wpro2025.png}
+  \caption{ページ遷移の概要}
+  \label{fig:transration}
+\end{figure}
 
 \subsubsection{HTTPメソッドとリソース名}
 表\ref{tb:music2}に機能，HTTPメソッド及びリソース名を示す．
